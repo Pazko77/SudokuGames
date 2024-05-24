@@ -103,9 +103,7 @@
     <Compile Include="MenuJeu.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SudokuGames.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="SudokuGames.vb" />
     <Compile Include="SudokuGames.Designer.vb">
       <DependentUpon>SudokuGames.vb</DependentUpon>
       <SubType>Form</SubType>
