@@ -36,6 +36,9 @@ Public Class SudokuGames
                 End If
                 cellule(X, Y) = New TextBox
                 cellule(X, Y).Location = New Point((X * SIZE) + offsetX, (Y * SIZE) + offsetY)
+                cellule(X, Y).Multiline = True
+                cellule(X, Y).TextAlign = HorizontalAlignment.Center
+                'cellule(X, Y).TextAlign = VerticalAlignment.Center
                 cellule(X, Y).Height = SIZE
                 cellule(X, Y).Width = SIZE
                 cellule(X, Y).BackColor = Color.White
