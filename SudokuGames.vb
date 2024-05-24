@@ -1,6 +1,14 @@
-﻿Public Class SudokuGames
+﻿Imports System.Windows.Forms.VisualStyles
+
+Public Class SudokuGames
+    Dim plateau As Integer()() = creerPlateau()
+    Dim solution As Integer()() = RetireNombresSudoku(plateau, 40)
     Private Sub SudokuGames_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim cellule(8, 8) As Button
+        grille()
+    End Sub
+
+    Function grille()
+        Dim cellule(8, 8) As TextBox
         Const SIZE As Integer = 30
         Const offset As Integer = 2
         Dim X, Y, offsetX, offsetY As Integer
@@ -24,21 +32,23 @@
                         offsetX = offsetX + 20
                     End If
                 End If
-                cellule(X, Y) = New Button
+                cellule(X, Y) = New TextBox
                 cellule(X, Y).Location = New Point((X * SIZE) + offsetX, (Y * SIZE) + offsetY)
+                cellule(X, Y).Multiline = True
+                cellule(X, Y).TextAlign = HorizontalAlignment.Center
+                'cellule(X, Y).TextAlign = VerticalAlignment.Center
                 cellule(X, Y).Height = SIZE
                 cellule(X, Y).Width = SIZE
                 cellule(X, Y).BackColor = Color.White
                 cellule(X, Y).Tag = Y & X
                 cellule(X, Y).Text = Y & X
-                AddHandler cellule(X, Y).Click, AddressOf button_click
+                AddHandler cellule(X, Y).TextChanged, AddressOf textbox_change
                 Panel1.Controls.Add(cellule(X, Y))
             Next
         Next
-        MsgBox(Panel1.Width & Panel1.Height)
-    End Sub
+    End Function
 
-    Private Sub button_click(sender As Object, e As EventArgs)
+    Private Sub textbox_change(sender As Object, e As EventArgs)
         MsgBox(sender.tag)
     End Sub
 
