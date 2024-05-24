@@ -1,5 +1,4 @@
-﻿
-Public Class SudokuGames
+﻿Public Class SudokuGames
     Private seconds As Integer = 60
     Private minutes As Integer = 6
     Private hours As Integer = 0
@@ -7,15 +6,13 @@ Public Class SudokuGames
     Const SIZE As Integer = 30
     Const offset As Integer = 2
     Dim difficulte As Integer
-
     Public Sub UpdateValue(newValue As Integer)
         difficulte = newValue
     End Sub
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim sudokuBoard As Integer()() = creerPlateau()
-
-
-        sudokuBoard = RetireNombresSudoku(sudokuBoard, difficulte)
+        sudokuBoard = RetireNombresSudoku(sudokuBoard, 20)
 
         Dim X, Y, offsetX, offsetY As Integer
         Panel1.Height = 295
@@ -133,6 +130,5 @@ Public Class SudokuGames
         End If
         Label1.Text = String.Format("{0:D2}:{1:D2}", minutes, seconds)
     End Sub
-
 
 End Class
