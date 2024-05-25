@@ -1,11 +1,12 @@
 ﻿Imports AxWMPLib
 Imports System.IO
 Imports WMPLib
-Public Class GG
+
+Public Class Form2
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Dim currentDirectory As String = AppDomain.CurrentDomain.BaseDirectory
-        Dim videoPath As String = Path.Combine(currentDirectory, "GG.mp4")
+        Dim videoPath As String = Path.Combine(currentDirectory, "Lose.mp4")
         If File.Exists(videoPath) Then
             AxWindowsMediaPlayer1.URL = videoPath
             AxWindowsMediaPlayer1.uiMode = "none"

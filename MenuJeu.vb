@@ -7,9 +7,10 @@ Public Class MenuJeu
         Else
             SaveComboBoxText(ComboBox1.Text)
             Form1.Show()
+            Me.Hide()
 
         End If
-        Me.Hide()
+
     End Sub
 
     Private Sub Afficher_Les_Noms(filePath As String)
@@ -79,8 +80,8 @@ Public Class MenuJeu
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim result As DialogResult = MessageBox.Show("Are u sure？", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
-            Me.Close()
             MsgBox("See u next time!")
+            Me.Close()
         End If
     End Sub
 

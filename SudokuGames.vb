@@ -1,4 +1,6 @@
-﻿Public Class SudokuGames
+﻿Imports System.Threading
+
+Public Class SudokuGames
     Private seconds As Integer = 60
     Private minutes As Integer = 6
     Private hours As Integer = 0
@@ -7,14 +9,16 @@
     Const offset As Integer = 2
     Private difficulte As Integer
     Private SudokuBoard_Correction As Integer()()
-
+    Private sudokuBoard As Integer()() = creerPlateau()
+    Private score As Integer = 0
+    Private HP As Integer = 3
     Public Sub UpdateValue(newValue As Integer)
 
         difficulte = newValue
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim sudokuBoard As Integer()() = creerPlateau()
+
         SudokuBoard_Correction = DeepCopy(sudokuBoard)
         sudokuBoard = RetireNombresSudoku(sudokuBoard, difficulte)
         For Each row As Integer() In SudokuBoard_Correction
@@ -151,11 +155,13 @@
         If Integer.TryParse(textBox.Text, currentValue) Then
             If Check_reponse(X, Y, currentValue) = False Then
                 textBox.ForeColor = Color.Red
+                HP -= 1
+                Actualiser_HP(HP)
             Else
-                textBox.ForeColor = Color.Black ' Reset the color if the input is valid
+                textBox.ForeColor = Color.Black
+                Calculer_afficher_Point(X, Y)
+
             End If
-        Else
-            textBox.ForeColor = Color.Black ' Reset the color if the input is not a valid integer
         End If
 
         CheckIfGameFinished()
@@ -168,15 +174,32 @@
             End If
         Next
         Timer1.Stop()
-
-
-
-        Me.Close()
+        Thread.Sleep(2000)
+        Me.Hide()
         GG.Show()
     End Sub
 
+    Private Sub Calculer_afficher_Point(Y As Integer, X As Integer)
+        Dim countY As Integer = 0
+        Dim countX As Integer = 0
+
+        For i = 0 To 8
+            If sudokuBoard(i)(X) = 0 Then
+                countY += 1
+            End If
+            If sudokuBoard(Y)(i) = 0 Then
+                countX += 1
+            End If
+        Next
+        If countX > countY Then
+            score += countX * (seconds + minutes * 60)
+        Else
+            score += countY * (seconds + minutes * 60)
+        End If
+        Label6.Text = score
+    End Sub
+
     Private Function Check_reponse(X As Integer, Y As Integer, valeur As Integer)
-        MsgBox("VALEUR X:" & X & " VALEUR Y: " & Y)
         If SudokuBoard_Correction(Y)(X) <> valeur Then
             Return False
         End If
@@ -197,7 +220,7 @@
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        Dim result As DialogResult = MessageBox.Show("Abandonner cette partie et retour dans le menu ?", "Don't give up", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Dim result As DialogResult = MessageBox.Show("Abandonner cette partie et retour dans le menu ?", "Give up", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
             Me.Close()
             MenuJeu.Show()
@@ -211,4 +234,23 @@
         Next
         Return result
     End Function
+
+    Private Sub Actualiser_HP(HP As Integer)
+        Select Case HP
+            Case 2
+                PictureBox1.Visible = False
+            Case 1
+                PictureBox1.Visible = False
+                PictureBox4.Visible = False
+            Case 0
+                PictureBox1.Visible = False
+                PictureBox2.Visible = False
+                PictureBox4.Visible = False
+                Thread.Sleep(2000)
+                Form2.Show()
+                Me.Hide()
+
+        End Select
+    End Sub
+
 End Class
