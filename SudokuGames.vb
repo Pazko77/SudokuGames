@@ -168,15 +168,11 @@
             End If
         Next
         Timer1.Stop()
-        MessageBox.Show("GG " & Label3.Text & ":" & Label1.Text)
 
-        Dim continuer As DialogResult = MessageBox.Show("Continuer?", "Game", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+
         Me.Close()
-        If continuer = DialogResult.Yes Then
-            Form1.Show()
-        Else
-            MenuJeu.Show()
-        End If
+        GG.Show()
     End Sub
 
     Private Function Check_reponse(X As Integer, Y As Integer, valeur As Integer)

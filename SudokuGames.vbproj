@@ -97,6 +97,12 @@
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GG.Designer.vb">
+      <DependentUpon>GG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="GG.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MenuJeu.Designer.vb">
       <DependentUpon>MenuJeu.vb</DependentUpon>
     </Compile>
@@ -131,6 +137,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GG.byn.resx">
+      <DependentUpon>GG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GG.resx">
+      <DependentUpon>GG.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuJeu.resx">
       <DependentUpon>MenuJeu.vb</DependentUpon>
@@ -181,6 +193,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ihm coeur.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
