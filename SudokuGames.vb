@@ -12,7 +12,7 @@
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim sudokuBoard As Integer()() = creerPlateau()
-        sudokuBoard = RetireNombresSudoku(sudokuBoard, 20)
+        sudokuBoard = RetireNombresSudoku(sudokuBoard, difficulte)
 
         Dim X, Y, offsetX, offsetY As Integer
         Panel1.Height = 295
@@ -38,11 +38,12 @@
                 cellule(X, Y).BackColor = Color.White
                 cellule(X, Y).Tag = Y & X
                 cellule(X, Y).Text = If(sudokuBoard(Y)(X) = 0, "", sudokuBoard(Y)(X).ToString())
-                AddHandler cellule(X, Y).TextChanged, AddressOf textBox_TextChanged
+                AddHandler cellule(X, Y).KeyPress, AddressOf TextBox_KeyPress
                 Panel1.Controls.Add(cellule(X, Y))
             Next
         Next
         Label3.Text = MenuJeu.ComboBox1.Text
+        Timer1.Start()
     End Sub
 
     Private Function creerPlateau() As Integer()()
@@ -104,18 +105,30 @@
 
     Public Function RetireNombresSudoku(ByVal grille As Integer()(), ByVal nbARetirer As Integer) As Integer()()
         Dim rand As New Random()
-        For i As Integer = 1 To nbARetirer
+        Dim removed As Integer = 0
+        While removed < nbARetirer
             Dim x As Integer = rand.Next(0, 9)
             Dim y As Integer = rand.Next(0, 9)
             If grille(x)(y) <> 0 Then
                 grille(x)(y) = 0
+                removed += 1
             End If
-        Next
+        End While
         Return grille
     End Function
 
-    Private Sub textBox_TextChanged(sender As Object, e As EventArgs)
+    Private Sub TextBox_KeyPress(sender As Object, e As KeyPressEventArgs)
+        If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ControlChars.Back Then
+            e.Handled = True
+        End If
 
+        Dim textBox As TextBox = DirectCast(sender, TextBox)
+        Dim currentValue As Integer
+        If Integer.TryParse(textBox.Text & e.KeyChar, currentValue) Then
+            If currentValue < 1 OrElse currentValue > 9 Then
+                e.Handled = True
+            End If
+        End If
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
@@ -129,6 +142,14 @@
             MessageBox.Show("You failed")
         End If
         Label1.Text = String.Format("{0:D2}:{1:D2}", minutes, seconds)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim result As DialogResult = MessageBox.Show("Abandonner cette partie et retour dans le menu ?", "Don't give up", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            Me.Close()
+            MenuJeu.Show()
+        End If
     End Sub
 
 End Class

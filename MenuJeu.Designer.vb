@@ -25,9 +25,9 @@ Partial Class MenuJeu
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Button3 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -43,6 +43,7 @@ Partial Class MenuJeu
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(296, 81)
         Me.Button1.TabIndex = 0
+        Me.Button1.TabStop = False
         Me.Button1.Text = "Start"
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -52,6 +53,7 @@ Partial Class MenuJeu
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(101, 39)
         Me.Button2.TabIndex = 1
+        Me.Button2.TabStop = False
         Me.Button2.Text = "Quit"
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -67,24 +69,6 @@ Partial Class MenuJeu
         Me.Panel1.Size = New System.Drawing.Size(408, 274)
         Me.Panel1.TabIndex = 3
         '
-        'ComboBox1
-        '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(119, 188)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(242, 26)
-        Me.ComboBox1.TabIndex = 2
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Arial Rounded MT Bold", 15.0!)
-        Me.Label1.Location = New System.Drawing.Point(3, 180)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(110, 34)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Name:"
-        '
         'Button3
         '
         Me.Button3.AutoSize = True
@@ -97,8 +81,31 @@ Partial Class MenuJeu
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(296, 60)
         Me.Button3.TabIndex = 4
+        Me.Button3.TabStop = False
         Me.Button3.Text = "Leaderboard"
         Me.Button3.UseVisualStyleBackColor = False
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.ComboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.ComboBox1.Font = New System.Drawing.Font("Arial", 10.0!)
+        Me.ComboBox1.FormattingEnabled = True
+        Me.ComboBox1.Location = New System.Drawing.Point(119, 188)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(242, 31)
+        Me.ComboBox1.TabIndex = 2
+        Me.ComboBox1.TabStop = False
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Arial Rounded MT Bold", 15.0!)
+        Me.Label1.Location = New System.Drawing.Point(3, 180)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(110, 34)
+        Me.Label1.TabIndex = 1
+        Me.Label1.Text = "Name:"
         '
         'MenuJeu
         '
