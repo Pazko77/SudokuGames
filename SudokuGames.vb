@@ -38,6 +38,7 @@
                 cellule(X, Y).BackColor = Color.White
                 cellule(X, Y).Tag = Y & X
                 cellule(X, Y).Text = If(sudokuBoard(Y)(X) = 0, "", sudokuBoard(Y)(X).ToString())
+                AddHandler cellule(X, Y).TextChanged, AddressOf TextBox_TextChanged
                 AddHandler cellule(X, Y).KeyPress, AddressOf TextBox_KeyPress
                 Panel1.Controls.Add(cellule(X, Y))
             Next
@@ -131,6 +132,28 @@
         End If
     End Sub
 
+    Private Sub textBox_TextChanged(sender As Object, e As EventArgs)
+        CheckIfGameFinished()
+    End Sub
+
+    Private Sub CheckIfGameFinished()
+        For Each tb As TextBox In cellule
+            If String.IsNullOrEmpty(tb.Text) Then
+                Exit Sub
+            End If
+        Next
+        Timer1.Stop()
+        MessageBox.Show("GG" & Label3.Text & ":" & Label1.Text)
+
+        Dim continuer As DialogResult = MessageBox.Show("Continuer?", "Game", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        Me.Close()
+        If continuer = DialogResult.Yes Then
+            Form1.Show()
+        Else
+            MenuJeu.Show()
+        End If
+    End Sub
+
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         seconds -= 1
         If seconds <= 0 Then
@@ -152,4 +175,7 @@
         End If
     End Sub
 
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
 End Class

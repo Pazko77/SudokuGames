@@ -42,6 +42,7 @@ Partial Class SudokuGames
         '
         'Panel1
         '
+        Me.Panel1.Font = New System.Drawing.Font("Arial", 9.0!)
         Me.Panel1.Location = New System.Drawing.Point(311, 96)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(450, 394)
@@ -64,9 +65,10 @@ Partial Class SudokuGames
         'Label1
         '
         Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Arial", 9.0!)
         Me.Label1.Location = New System.Drawing.Point(925, 42)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(62, 18)
+        Me.Label1.Size = New System.Drawing.Size(64, 21)
         Me.Label1.TabIndex = 14
         Me.Label1.Text = "Label1"
         '
@@ -116,9 +118,10 @@ Partial Class SudokuGames
         'Label3
         '
         Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Arial", 9.0!)
         Me.Label3.Location = New System.Drawing.Point(925, 113)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(62, 18)
+        Me.Label3.Size = New System.Drawing.Size(64, 21)
         Me.Label3.TabIndex = 21
         Me.Label3.Text = "Label3"
         '
@@ -134,6 +137,7 @@ Partial Class SudokuGames
         '
         'Button3
         '
+        Me.Button3.Font = New System.Drawing.Font("Arial", 9.0!)
         Me.Button3.Location = New System.Drawing.Point(868, 251)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(88, 42)
