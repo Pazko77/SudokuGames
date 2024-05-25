@@ -5,14 +5,22 @@
     Dim cellule(8, 8) As TextBox
     Const SIZE As Integer = 30
     Const offset As Integer = 2
-    Dim difficulte As Integer
+    Private difficulte As Integer
+    Private SudokuBoard_Correction As Integer()()
+
     Public Sub UpdateValue(newValue As Integer)
+
         difficulte = newValue
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim sudokuBoard As Integer()() = creerPlateau()
+        SudokuBoard_Correction = DeepCopy(sudokuBoard)
         sudokuBoard = RetireNombresSudoku(sudokuBoard, difficulte)
+        For Each row As Integer() In SudokuBoard_Correction
+            Console.WriteLine(String.Join(" ", row))
+        Next
+
 
         Dim X, Y, offsetX, offsetY As Integer
         Panel1.Height = 295
@@ -36,9 +44,9 @@
                 cellule(X, Y).Height = SIZE
                 cellule(X, Y).Width = SIZE
                 cellule(X, Y).BackColor = Color.White
-                cellule(X, Y).Tag = Y & X
+                cellule(X, Y).Tag = New Point(X, Y)
                 cellule(X, Y).Text = If(sudokuBoard(Y)(X) = 0, "", sudokuBoard(Y)(X).ToString())
-                AddHandler cellule(X, Y).TextChanged, AddressOf TextBox_TextChanged
+                AddHandler cellule(X, Y).TextChanged, AddressOf textBox_TextChanged
                 AddHandler cellule(X, Y).KeyPress, AddressOf TextBox_KeyPress
                 Panel1.Controls.Add(cellule(X, Y))
             Next
@@ -102,6 +110,7 @@
             Next
         Next
         Return True
+
     End Function
 
     Public Function RetireNombresSudoku(ByVal grille As Integer()(), ByVal nbARetirer As Integer) As Integer()()
@@ -133,6 +142,22 @@
     End Sub
 
     Private Sub textBox_TextChanged(sender As Object, e As EventArgs)
+        Dim textBox As TextBox = DirectCast(sender, TextBox)
+        Dim position As Point = DirectCast(textBox.Tag, Point)
+        Dim X As Integer = position.X
+        Dim Y As Integer = position.Y
+
+        Dim currentValue As Integer
+        If Integer.TryParse(textBox.Text, currentValue) Then
+            If Check_reponse(X, Y, currentValue) = False Then
+                textBox.ForeColor = Color.Red
+            Else
+                textBox.ForeColor = Color.Black ' Reset the color if the input is valid
+            End If
+        Else
+            textBox.ForeColor = Color.Black ' Reset the color if the input is not a valid integer
+        End If
+
         CheckIfGameFinished()
     End Sub
 
@@ -143,7 +168,7 @@
             End If
         Next
         Timer1.Stop()
-        MessageBox.Show("GG" & Label3.Text & ":" & Label1.Text)
+        MessageBox.Show("GG " & Label3.Text & ":" & Label1.Text)
 
         Dim continuer As DialogResult = MessageBox.Show("Continuer?", "Game", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         Me.Close()
@@ -153,6 +178,14 @@
             MenuJeu.Show()
         End If
     End Sub
+
+    Private Function Check_reponse(X As Integer, Y As Integer, valeur As Integer)
+        MsgBox("VALEUR X:" & X & " VALEUR Y: " & Y)
+        If SudokuBoard_Correction(Y)(X) <> valeur Then
+            Return False
+        End If
+        Return True
+    End Function
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         seconds -= 1
@@ -175,7 +208,11 @@
         End If
     End Sub
 
-    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
-
-    End Sub
+    Private Function DeepCopy(Of T)(ByVal source As T()()) As T()()
+        Dim result As T()() = New T(source.Length - 1)() {}
+        For i As Integer = 0 To source.Length - 1
+            result(i) = CType(source(i).Clone(), T())
+        Next
+        Return result
+    End Function
 End Class
