@@ -28,6 +28,7 @@ Partial Class MenuJeu
         Me.Button3 = New System.Windows.Forms.Button()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.Button5 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -107,6 +108,16 @@ Partial Class MenuJeu
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Name:"
         '
+        'Button5
+        '
+        Me.Button5.Font = New System.Drawing.Font("Arial Rounded MT Bold", 13.0!, System.Drawing.FontStyle.Italic)
+        Me.Button5.Location = New System.Drawing.Point(1022, 15)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(135, 38)
+        Me.Button5.TabIndex = 5
+        Me.Button5.Text = "Setting"
+        Me.Button5.UseVisualStyleBackColor = True
+        '
         'MenuJeu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
@@ -115,6 +126,7 @@ Partial Class MenuJeu
         Me.BackgroundImage = Global.SudokuGames.My.Resources.Resources.fond
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(1169, 678)
+        Me.Controls.Add(Me.Button5)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.Button2)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -133,4 +145,5 @@ Partial Class MenuJeu
     Friend WithEvents Label1 As Label
     Friend WithEvents ComboBox1 As ComboBox
     Friend WithEvents Button3 As Button
+    Friend WithEvents Button5 As Button
 End Class

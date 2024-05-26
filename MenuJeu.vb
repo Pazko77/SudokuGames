@@ -96,6 +96,7 @@ Public Class MenuJeu
 
         Dim filePath As String = "User.txt"
         Afficher_Les_Noms(filePath)
+
     End Sub
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs)
@@ -110,6 +111,15 @@ Public Class MenuJeu
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Me.Hide()
+        StatsUser.Show()
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
     End Sub
 End Class
