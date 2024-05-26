@@ -5,17 +5,17 @@
         Me.Close()
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        SudokuGames.UpdateValue(31)
+        SudokuGames.UpdateValue(31, "Easy")
         SudokuGames.Show()
         Me.Close()
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        SudokuGames.UpdateValue(53)
+        SudokuGames.UpdateValue(53, "Normal")
         SudokuGames.Show()
         Me.Close()
     End Sub
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        SudokuGames.UpdateValue(60)
+        SudokuGames.UpdateValue(60, "Hard")
         SudokuGames.Show()
         Me.Close()
     End Sub

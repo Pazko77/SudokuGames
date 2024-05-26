@@ -12,12 +12,13 @@ Public Class SudokuGames
     Private sudokuBoard As Integer()() = creerPlateau()
     Private score As Integer = 0
     Private HP As Integer = 3
-    Public Sub UpdateValue(newValue As Integer)
-
+    Private level As String
+    Public Sub UpdateValue(newValue As Integer, niveau_diff As String)
+        level = niveau_diff
         difficulte = newValue
     End Sub
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub Sudoku_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         SudokuBoard_Correction = DeepCopy(sudokuBoard)
         sudokuBoard = RetireNombresSudoku(sudokuBoard, difficulte)
@@ -176,7 +177,7 @@ Public Class SudokuGames
         Timer1.Stop()
         Thread.Sleep(2000)
         Me.Hide()
-        MenuJeu.Enregistrer_score(Label3.Text, minutes, seconds, score)
+        MenuJeu.Enregistrer_score(Label3.Text, minutes, seconds, score, level)
         GG.Show()
     End Sub
 

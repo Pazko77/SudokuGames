@@ -1,5 +1,5 @@
 ﻿Module Module1
     Sub Main()
-        Application.Run(MenuJeu)
+        Application.Run(StatsUser)
     End Sub
 End Module

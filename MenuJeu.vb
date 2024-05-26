@@ -60,7 +60,7 @@ Public Class MenuJeu
         End If
 
     End Sub
-    Public Sub Enregistrer_score(name As String, minute As Integer, seconde As Integer, score As Integer)
+    Public Sub Enregistrer_score(name As String, minute As Integer, seconde As Integer, score As Integer, level As String)
         Dim ligne As Integer = -1
         Dim lines As String() = File.ReadAllLines(filePath)
         Dim stats As List(Of String) = New List(Of String)(lines)
@@ -73,9 +73,9 @@ Public Class MenuJeu
         Next
 
         If ligne <> -1 Then
-            stats(ligne) = name & " , " & minute & ":" & seconde & "    " & score
+            stats(ligne) = name & " , " & level & " , " & minute & ":" & seconde & "    " & score
         Else
-            stats.Add(name & " , " & minute & ":" & seconde & "    " & score)
+            stats.Add(name & " , " & level & " , " & minute & ":" & seconde & "    " & score)
         End If
 
         File.WriteAllLines(filePath, stats.ToArray())
@@ -109,4 +109,7 @@ Public Class MenuJeu
         End If
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+
+    End Sub
 End Class
