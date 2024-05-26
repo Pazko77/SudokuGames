@@ -176,6 +176,7 @@ Public Class SudokuGames
         Timer1.Stop()
         Thread.Sleep(2000)
         Me.Hide()
+        MenuJeu.Enregistrer_score(Label3.Text, minutes, seconds, score)
         GG.Show()
     End Sub
 

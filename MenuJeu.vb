@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Public Class MenuJeu
+    Private filePath As String = "User.txt"
     Dim autoCompleteCollection As New AutoCompleteStringCollection()
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If ComboBox1.Text = "" Then
@@ -36,19 +37,22 @@ Public Class MenuJeu
         autoCompleteCollection.Add(Nouveau.ToString)
     End Sub
     Private Sub SaveComboBoxText(text As String)
-        Dim filePath As String = "User.txt"
+
         Dim exists As Boolean = False
 
-        If IO.File.Exists(filePath) Then
-            Dim lines As String() = IO.File.ReadAllLines(filePath)
-            For Each line As String In lines
-                If line = text Then
-                    exists = True
-                    Exit For
-                End If
-            Next
+        If Not File.Exists(filePath) Then
+            Using fs As FileStream = File.Create(filePath)
+                fs.Close()
+            End Using
         End If
 
+        Dim lines As String() = File.ReadAllLines(filePath)
+        For Each line As String In lines
+            If line = text Then
+                exists = True
+                Exit For
+            End If
+        Next
         If Not exists Then
             GenerateTextFile(filePath, text)
             ComboBox1.Items.Add(text)
@@ -56,10 +60,30 @@ Public Class MenuJeu
         End If
 
     End Sub
+    Public Sub Enregistrer_score(name As String, minute As Integer, seconde As Integer, score As Integer)
+        Dim ligne As Integer = -1
+        Dim lines As String() = File.ReadAllLines(filePath)
+        Dim stats As List(Of String) = New List(Of String)(lines)
 
-    Private Sub GenerateTextFile(filePath As String, content As String)
+        For i As Integer = 0 To stats.Count - 1
+            If stats(i) = name Then
+                ligne = i
+                Exit For
+            End If
+        Next
+
+        If ligne <> -1 Then
+            stats(ligne) = name & " , " & minute & ":" & seconde & "    " & score
+        Else
+            stats.Add(name & " , " & minute & ":" & seconde & "    " & score)
+        End If
+
+        File.WriteAllLines(filePath, stats.ToArray())
+    End Sub
+
+    Private Sub GenerateTextFile(filePath As String, text As String)
         Using writer As New StreamWriter(filePath, append:=True)
-            writer.WriteLine(content)
+            writer.WriteLine(text)
         End Using
     End Sub
 

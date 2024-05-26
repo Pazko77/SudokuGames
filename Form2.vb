@@ -30,4 +30,8 @@ Public Class Form2
             Me.Hide()
         End If
     End Sub
+
+    Private Sub AxWindowsMediaPlayer1_Enter(sender As Object, e As EventArgs) Handles AxWindowsMediaPlayer1.Enter
+
+    End Sub
 End Class
