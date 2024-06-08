@@ -30,39 +30,40 @@ Partial Class Form1
         '
         'Button1
         '
-        Me.Button1.Font = New System.Drawing.Font("Arial Narrow", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.Font = New System.Drawing.Font("Arial Narrow", 15.0!)
         Me.Button1.Location = New System.Drawing.Point(51, 176)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(233, 240)
+        Me.Button1.Size = New System.Drawing.Size(250, 250)
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "Easy"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
-        Me.Button2.Font = New System.Drawing.Font("Arial Narrow", 14.0!)
+        Me.Button2.Font = New System.Drawing.Font("Arial Narrow", 15.0!)
         Me.Button2.Location = New System.Drawing.Point(338, 176)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(233, 240)
+        Me.Button2.Size = New System.Drawing.Size(250, 250)
         Me.Button2.TabIndex = 1
         Me.Button2.Text = "Normal"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button3
         '
-        Me.Button3.Font = New System.Drawing.Font("Arial Narrow", 14.0!)
-        Me.Button3.Location = New System.Drawing.Point(619, 176)
+        Me.Button3.Font = New System.Drawing.Font("Arial Narrow", 15.0!)
+        Me.Button3.Location = New System.Drawing.Point(637, 176)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(233, 240)
+        Me.Button3.Size = New System.Drawing.Size(250, 250)
         Me.Button3.TabIndex = 2
         Me.Button3.Text = "Hard"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'Button4
         '
+        Me.Button4.Font = New System.Drawing.Font("Arial", 15.0!)
         Me.Button4.Location = New System.Drawing.Point(36, 70)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(89, 50)
+        Me.Button4.Size = New System.Drawing.Size(169, 50)
         Me.Button4.TabIndex = 3
         Me.Button4.Text = "Retour"
         Me.Button4.UseVisualStyleBackColor = True
@@ -71,17 +72,20 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackgroundImage = Global.SudokuGames.My.Resources.Resources.Menu
-        Me.ClientSize = New System.Drawing.Size(900, 506)
+        Me.BackgroundImage = Global.SudokuGames.My.Resources.Resources.niveau
+        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.ClientSize = New System.Drawing.Size(1361, 821)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
+        Me.DoubleBuffered = True
         Me.ForeColor = System.Drawing.SystemColors.ControlText
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Form1"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "DifficultySelection"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
 
     End Sub

@@ -5,15 +5,18 @@ Imports WMPLib
 Public Class Form2
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim currentDirectory As String = AppDomain.CurrentDomain.BaseDirectory
-        Dim videoPath As String = Path.Combine(currentDirectory, "Lose.mp4")
+        'Dim videoPath As String = "Lose.mp4"
+        Dim videoPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Lose.mp4")
         If File.Exists(videoPath) Then
             AxWindowsMediaPlayer1.URL = videoPath
             AxWindowsMediaPlayer1.uiMode = "none"
             AxWindowsMediaPlayer1.Dock = DockStyle.Fill
+            AxWindowsMediaPlayer1.Refresh()
             AxWindowsMediaPlayer1.Ctlcontrols.play()
         Else
             MsgBox("Video erreur")
+            MenuJeu.Show()
+            Me.Close()
         End If
 
         AddHandler AxWindowsMediaPlayer1.PlayStateChange, AddressOf AxWindowsMediaPlayer1_PlayStateChange
@@ -27,7 +30,7 @@ Public Class Form2
             Else
                 MenuJeu.Show()
             End If
-            Me.Hide()
+            Me.Close()
         End If
     End Sub
 

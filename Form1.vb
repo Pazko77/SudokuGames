@@ -5,7 +5,7 @@
         Me.Close()
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        SudokuGames.UpdateValue(31, "Easy")
+        SudokuGames.UpdateValue(25, "Easy")
         SudokuGames.Show()
         Me.Close()
     End Sub
@@ -28,6 +28,12 @@
         For Each Button As Button In Me.Controls
             Button.BackgroundImage = My.Resources.button
         Next
-
+        Button4.Location = New Point(20, 20)
+        Button1.Size = New Size(250, 200)
+        Button2.Size = New Size(250, 200)
+        Button3.Size = New Size(250, 200)
+        Button2.Location = New Point(width / 2 - Button2.Width / 2, height / 2 - Button2.Height / 2)
+        Button1.Location = New Point(Button2.Left - Button1.Width - 30, height / 2 - Button1.Height / 2)
+        Button3.Location = New Point(Button2.Left + Button2.Width + 30, height / 2 - Button1.Height / 2)
     End Sub
 End Class

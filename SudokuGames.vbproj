@@ -91,6 +91,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Credit.Designer.vb">
+      <DependentUpon>Credit.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Credit.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
@@ -147,6 +153,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Credit.resx">
+      <DependentUpon>Credit.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
@@ -236,6 +245,41 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\setting %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crab-remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\20240528105805.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\niveau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZSkins_2024-05-23_23-33-40.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ZSkins_2024-05-23_23-33-17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Zhonqi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pascal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="GG.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lose.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

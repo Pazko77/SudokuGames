@@ -1,12 +1,14 @@
-﻿Imports System.Threading
+﻿Imports System.CodeDom
+Imports System.Drawing.Drawing2D
+Imports System.Threading
 
 Public Class SudokuGames
     Private seconds As Integer = 60
     Private minutes As Integer = 6
     Private hours As Integer = 0
     Dim cellule(8, 8) As TextBox
-    Const SIZE As Integer = 30
-    Const offset As Integer = 2
+    Const SIZE As Integer = 50
+    Const offset As Integer = 5
     Private difficulte As Integer
     Private SudokuBoard_Correction As Integer()()
     Private sudokuBoard As Integer()() = creerPlateau()
@@ -26,7 +28,6 @@ Public Class SudokuGames
             Console.WriteLine(String.Join(" ", row))
         Next
 
-
         Dim X, Y, offsetX, offsetY As Integer
         Panel1.Height = 295
         Panel1.Width = 295
@@ -45,19 +46,34 @@ Public Class SudokuGames
                     offsetX = offsetX + 20
                 End If
                 cellule(X, Y) = New TextBox
+                cellule(X, Y).Multiline = True
                 cellule(X, Y).Location = New Point((X * SIZE) + offsetX, (Y * SIZE) + offsetY)
                 cellule(X, Y).Height = SIZE
                 cellule(X, Y).Width = SIZE
                 cellule(X, Y).BackColor = Color.White
+                cellule(X, Y).MaxLength = 1
                 cellule(X, Y).Tag = New Point(X, Y)
+                cellule(X, Y).TextAlign = HorizontalAlignment.Center
                 cellule(X, Y).Text = If(sudokuBoard(Y)(X) = 0, "", sudokuBoard(Y)(X).ToString())
                 AddHandler cellule(X, Y).TextChanged, AddressOf textBox_TextChanged
                 AddHandler cellule(X, Y).KeyPress, AddressOf TextBox_KeyPress
                 Panel1.Controls.Add(cellule(X, Y))
+                Dim cellValue As Integer
+                If Integer.TryParse(cellule(X, Y).Text, cellValue) AndAlso cellValue > 0 Then
+                    cellule(X, Y).Enabled = False
+                    cellule(X, Y).BackColor = Color.LightGray
+                End If
             Next
         Next
         Label3.Text = MenuJeu.ComboBox1.Text
         Timer1.Start()
+        Panel1.Location = New Point(Width / 2 - Panel1.Width / 2, Height / 2 - Panel1.Height / 2)
+        Panel2.Location = New Point(Width - Panel2.Width - 10, Height / 2 - Panel1.Height / 2)
+        PictureBox3.Location = New Point(Width - PictureBox3.Width, Height - PictureBox3.Height)
+        PictureBox1.Location = New Point(Panel1.Left + 50, Panel1.Top - PictureBox1.Width - 20)
+        PictureBox2.Location = New Point(PictureBox1.Left + PictureBox2.Width + 60, Panel1.Top - PictureBox1.Width - 20)
+        PictureBox4.Location = New Point(PictureBox2.Left + PictureBox4.Width + 80, Panel1.Top - PictureBox1.Width - 20)
+
     End Sub
 
     Private Function creerPlateau() As Integer()()
@@ -69,23 +85,46 @@ Public Class SudokuGames
         Return plateau
     End Function
 
-    Private Function estValide(ByVal plateau As Integer()(), ByVal row As Integer, ByVal col As Integer, ByVal num As Integer) As Boolean
+    Public Function estValide(ByVal plateau As Integer()(), ByVal row As Integer, ByVal col As Integer, ByVal num As Integer) As Boolean
         If plateau(row).Contains(num) Then
             Return False
         End If
 
-        If [Enumerable].Contains([Enumerable].Select(plateau, Function(i) i(col)), num) Then
+        If ValeurPresenteDansColonne(plateau, col, num) Then
             Return False
         End If
 
         Dim startRow As Integer = 3 * (row \ 3)
         Dim startCol As Integer = 3 * (col \ 3)
-        Dim square As Integer() = [Enumerable].SelectMany(plateau.Skip(startRow).Take(3), Function(i) i.Skip(startCol).Take(3)).ToArray()
+        Dim square As Integer() = ExtraireBloc(plateau, startRow, startCol)
         If square.Contains(num) Then
             Return False
         End If
 
         Return True
+    End Function
+
+    Function ExtraireBloc(ByVal plateau As Integer()(), ByVal startRow As Integer, ByVal startCol As Integer) As Integer()
+        Dim bloc(8) As Integer ' Tableau pour stocker les 9 éléments du bloc 3x3
+        Dim index As Integer = 0 ' Indice pour parcourir le tableau bloc
+
+        For i As Integer = startRow To startRow + 2
+            For j As Integer = startCol To startCol + 2
+                bloc(index) = plateau(i)(j) ' Ajouter l'élément à la position (i, j) au tableau bloc
+                index += 1 ' Passer à l'index suivant dans le tableau bloc
+            Next
+        Next
+
+        Return bloc ' Retourner le tableau contenant les éléments du bloc extrait
+    End Function
+
+    Function ValeurPresenteDansColonne(plateau As Integer()(), col As Integer, num As Integer) As Boolean
+        For i As Integer = 0 To 8 ' Parcourir les lignes de la colonne
+            If plateau(i)(col) = num Then
+                Return True ' La valeur est présente dans la colonne
+            End If
+        Next
+        Return False ' La valeur n'est pas présente dans la colonne
     End Function
 
     Private Function GenereSolution(ByRef board As Integer()()) As Boolean
@@ -115,10 +154,9 @@ Public Class SudokuGames
             Next
         Next
         Return True
-
     End Function
 
-    Public Function RetireNombresSudoku(ByVal grille As Integer()(), ByVal nbARetirer As Integer) As Integer()()
+    Private Function RetireNombresSudoku(ByVal grille As Integer()(), ByVal nbARetirer As Integer) As Integer()()
         Dim rand As New Random()
         Dim removed As Integer = 0
         While removed < nbARetirer
@@ -136,14 +174,6 @@ Public Class SudokuGames
         If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ControlChars.Back Then
             e.Handled = True
         End If
-
-        Dim textBox As TextBox = DirectCast(sender, TextBox)
-        Dim currentValue As Integer
-        If Integer.TryParse(textBox.Text & e.KeyChar, currentValue) Then
-            If currentValue < 1 OrElse currentValue > 9 Then
-                e.Handled = True
-            End If
-        End If
     End Sub
 
     Private Sub textBox_TextChanged(sender As Object, e As EventArgs)
@@ -151,35 +181,50 @@ Public Class SudokuGames
         Dim position As Point = DirectCast(textBox.Tag, Point)
         Dim X As Integer = position.X
         Dim Y As Integer = position.Y
-
+        Dim correct As Boolean
         Dim currentValue As Integer
         If Integer.TryParse(textBox.Text, currentValue) Then
             If Check_reponse(X, Y, currentValue) = False Then
                 textBox.ForeColor = Color.Red
-                HP -= 1
-                Actualiser_HP(HP)
+                Actualiser_HP()
+                correct = False
             Else
                 textBox.ForeColor = Color.Black
                 Calculer_afficher_Point(X, Y)
-
+                correct = True
+                textBox.Enabled = False
             End If
         End If
-
-        CheckIfGameFinished()
-    End Sub
-
-    Private Sub CheckIfGameFinished()
         For Each tb As TextBox In cellule
-            If String.IsNullOrEmpty(tb.Text) Then
+            If String.IsNullOrEmpty(tb.Text) Or correct = False Then
                 Exit Sub
             End If
         Next
-        Timer1.Stop()
-        Thread.Sleep(2000)
-        Me.Hide()
-        MenuJeu.Enregistrer_score(Label3.Text, minutes, seconds, score, level)
-        GG.Show()
+        GameFinished()
+
     End Sub
+
+    Private Sub GameFinished()
+        Dim Perdre As Boolean
+        Timer1.Stop()
+
+        If HP = 0 Then
+            Perdre = True
+            Form2.Show()
+        Else
+            GG.Show()
+        End If
+        Enregistrer_score(Label3.Text, score, level, CALCULER_temps, Perdre)
+        Me.Close()
+    End Sub
+
+    Private Function CALCULER_temps()
+        Dim temps_initial As Integer = 7 * 60
+        Dim tempsJoue As Integer
+        Dim tempsPasse As Integer = minutes * 60 + seconds
+        tempsJoue = temps_initial - tempsPasse
+        Return tempsJoue
+    End Function
 
     Private Sub Calculer_afficher_Point(Y As Integer, X As Integer)
         Dim countY As Integer = 0
@@ -200,7 +245,6 @@ Public Class SudokuGames
         End If
         Label6.Text = score
     End Sub
-
     Private Function Check_reponse(X As Integer, Y As Integer, valeur As Integer)
         If SudokuBoard_Correction(Y)(X) <> valeur Then
             Return False
@@ -215,7 +259,7 @@ Public Class SudokuGames
             minutes -= 1
         End If
         If minutes = 0 And seconds <= 0 Then
-            Me.Hide()
+            Me.Close()
             MessageBox.Show("You failed")
         End If
         Label1.Text = String.Format("{0:D2}:{1:D2}", minutes, seconds)
@@ -224,6 +268,7 @@ Public Class SudokuGames
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         Dim result As DialogResult = MessageBox.Show("Abandonner cette partie et retour dans le menu ?", "Give up", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
         If result = DialogResult.Yes Then
+            Enregistrer_score(Label3.Text, score, level, CALCULER_temps, True)
             Me.Close()
             MenuJeu.Show()
         End If
@@ -237,22 +282,20 @@ Public Class SudokuGames
         Return result
     End Function
 
-    Private Sub Actualiser_HP(HP As Integer)
+    Private Sub Actualiser_HP()
+        HP -= 1
         Select Case HP
             Case 2
                 PictureBox1.Visible = False
             Case 1
-                PictureBox1.Visible = False
-                PictureBox4.Visible = False
-            Case 0
-                PictureBox1.Visible = False
                 PictureBox2.Visible = False
+            Case 0
                 PictureBox4.Visible = False
-                Thread.Sleep(2000)
-                Form2.Show()
-                Me.Hide()
-
+                GameFinished()
         End Select
     End Sub
 
+    Private Sub PictureBox2_Click(sender As Object, e As EventArgs) Handles PictureBox2.Click
+
+    End Sub
 End Class
